@@ -1,0 +1,40 @@
+:host {
+    --primary: #00c0b5;
+    --danger: #ff6172;
+    --dark: #3c3c3c;
+    --warning: #ffb637;
+
+    /* Backgrounds */
+    --bg-default: #fafaf6;
+    --bg-accent: white;
+    --border-color: #E5E5E5;
+
+    /* Text colors */
+    --text-color-default: #333;
+    --text-color-reverse: #fff;
+    --text-color-placeholder: #6B7280;
+
+    /* Fonts */
+    --font-title: "Open Sans Condensed", sans-serif;
+    --font-default: "Open Sans", sans-serif;
+
+    --font-size-default: 15px;
+    --font-size-title: 24px;
+    --font-size-subtitle: 18px;
+    --font-size-controls: 18px;
+    --font-size-caption: 15px;
+
+    --line-height-default: 20px;
+    --line-height-title: 32px;
+    --line-height-subtitle: 24px;
+    --line-height-controls: 20px;
+    --line-height-caption: 20px;
+
+    --border-radius-default: 12px;
+    --border-radius-xl: 24px;
+    --border-radius-md: 8px;
+    --border-radius-sm: 4px;
+
+    /* Clip */
+    --clip-path-default: none;
+}
