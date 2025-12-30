@@ -17,7 +17,8 @@ const DemoVideoTrigger: React.FC<DemoVideoTriggerProps> = ({
     fontFamily: 'var(--font-demo-button, inherit)',
     color: 'inherit',
     fontSize: 'inherit',
-    lineHeight: 'inherit'
+    lineHeight: 'inherit',
+    textDecoration: 'underline'
   }
 
   return (
