@@ -1,7 +1,7 @@
-import { CompanyType, DEBOUNCE_DELAY } from '../../../../Company.constants'
+import { CompanyType, DEBOUNCE_DELAY } from '../../Company.constants'
 import React, { useRef, useState } from 'react'
 
-import FormField from '../../../../../../components/FormField/FormField'
+import FormField from '../../../../components/FormField/FormField'
 import searchCompanies from '../../helpers/searchCompanies'
 
 export interface CompanySelectProps {

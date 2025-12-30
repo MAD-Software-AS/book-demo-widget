@@ -1,4 +1,4 @@
-# mad-customer-registration-widget
+# mad-book-demo-widget
 
 ## Local Development
 To install the dependencies for local development, run:
@@ -31,14 +31,14 @@ Move widget.min.js from dist folder to root of your project.
 
 ```html
 <!-- Add the widget container in your HTML file -->
-<div id="mad-customer-registration-widget"></div>
+<div id="mad-book-demo-widget"></div>
 ```
 
 ```javascript
 <script>
   window.onload = () => {
-    widget = window.MAD({
-      targetId: 'mad-customer-registration-widget',
+    widget = window.MAD_BOOK_DEMO_WIDGET({
+      targetId: 'mad-book-demo-widget',
       env: 'dev',
       ...
     });

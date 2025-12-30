@@ -438,6 +438,17 @@ input::placeholder {
   }
 }
 
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 ul, li {
   padding: 0 0 0 8px;
   margin: 0;

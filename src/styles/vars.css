@@ -17,6 +17,7 @@
     /* Fonts */
     --font-title: "Open Sans Condensed", sans-serif;
     --font-default: "Open Sans", sans-serif;
+    --font-demo-button: inherit;
 
     --font-size-default: 15px;
     --font-size-title: 24px;

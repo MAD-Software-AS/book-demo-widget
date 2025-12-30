@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import { createTemplate } from './template'
 import setupCSSVars from './app/utils/setupCSSVars'
 
-const WC_TAG_NAME = 'mad-customer-registration-widget'
+const WC_TAG_NAME = 'mad-book-demo-widget'
 
 export default function createComponent(config: any) {
   const template = createTemplate()
@@ -36,7 +36,11 @@ export default function createComponent(config: any) {
       const root = ReactDOM.createRoot(container)
       root.render(
         <React.StrictMode>
-          <App env={config.env || 'prod'} t={config.t} />
+          <App
+            env={config.env || 'prod'}
+            t={config.t}
+            videoLink={config.videoLink || ''}
+          />
         </React.StrictMode>
       )
     }

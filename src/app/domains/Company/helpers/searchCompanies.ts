@@ -1,4 +1,4 @@
-import { CompanyType } from '../../../Company.constants'
+import { CompanyType } from '../Company.constants'
 
 const dataTransform = (item: any): CompanyType => {
   return {
