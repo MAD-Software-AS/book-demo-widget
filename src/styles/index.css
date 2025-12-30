@@ -16,7 +16,6 @@
 }
 .section {
   background: var(--bg-default);
-  display: grid;
 }
 .section-content {
   display: flex;

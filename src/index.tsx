@@ -15,10 +15,7 @@ if (typeof window !== 'undefined' && !(window as any).__MAD_WIDGET_COUNTER__) {
 // Module-level WeakMap to store config for each widget instance
 const widgetConfigMap = new WeakMap<HTMLElement, any>()
 
-console.log(WC_TAG_NAME)
-
 export default function createComponent(config: any) {
-  console.log(WC_TAG_NAME, ' createComponent: ', config)
   const template = createTemplate()
 
   // Generate unique tag name for each widget instance using global counter

@@ -5,7 +5,10 @@ export interface DemoVideoTriggerProps {
   text: string
 }
 
-const DemoVideoTrigger: React.FC<DemoVideoTriggerProps> = ({ onClick, text }) => {
+const DemoVideoTrigger: React.FC<DemoVideoTriggerProps> = ({
+  onClick,
+  text
+}) => {
   const triggerStyle: React.CSSProperties = {
     background: 'transparent',
     border: 'none',
@@ -25,4 +28,3 @@ const DemoVideoTrigger: React.FC<DemoVideoTriggerProps> = ({ onClick, text }) =>
 }
 
 export default DemoVideoTrigger
-
