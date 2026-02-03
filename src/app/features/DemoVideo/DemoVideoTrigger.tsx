@@ -3,13 +3,15 @@ import React from 'react'
 export interface DemoVideoTriggerProps {
   onClick: () => void
   text: string
+  style?: React.CSSProperties
 }
 
 const DemoVideoTrigger: React.FC<DemoVideoTriggerProps> = ({
   onClick,
-  text
+  text,
+  style
 }) => {
-  const triggerStyle: React.CSSProperties = {
+  const defaultStyle: React.CSSProperties = {
     background: 'transparent',
     border: 'none',
     padding: 0,
@@ -22,7 +24,7 @@ const DemoVideoTrigger: React.FC<DemoVideoTriggerProps> = ({
   }
 
   return (
-    <button style={triggerStyle} onClick={onClick}>
+    <button style={style || defaultStyle} onClick={onClick}>
       {text}
     </button>
   )

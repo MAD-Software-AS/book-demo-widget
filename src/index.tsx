@@ -65,6 +65,7 @@ export default function createComponent(config: any) {
             env={widgetConfig.env || 'prod'}
             t={widgetConfig.t}
             videoLink={widgetConfig.videoLink || ''}
+            triggerStyle={widgetConfig.triggerStyle || undefined}
           />
         </React.StrictMode>
       )

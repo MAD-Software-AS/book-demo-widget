@@ -1,6 +1,6 @@
-import React from 'react'
-import DemoVideoProvider from './contexts/DemoVideo/DemoVideoProvider'
 import DemoVideo from './features/DemoVideo/DemoVideo'
+import DemoVideoProvider from './contexts/DemoVideo/DemoVideoProvider'
+import React from 'react'
 
 interface AppProps {
   t: {
@@ -28,12 +28,13 @@ interface AppProps {
   }
   env: string
   videoLink: string
+  triggerStyle?: React.CSSProperties
 }
 
-const App: React.FC<AppProps> = ({ env, t, videoLink }) => {
+const App: React.FC<AppProps> = ({ env, t, videoLink, triggerStyle }) => {
   return (
     <DemoVideoProvider env={env} videoLink={videoLink}>
-      <DemoVideo t={t} />
+      <DemoVideo t={t} triggerStyle={triggerStyle} />
     </DemoVideoProvider>
   )
 }

@@ -29,6 +29,7 @@ export interface DemoVideoProps {
       errorMessage: string
     }
   }
+  triggerStyle?: React.CSSProperties
 }
 
 interface ToastState {
@@ -36,7 +37,7 @@ interface ToastState {
   type: 'success' | 'error'
 }
 
-const DemoVideo: React.FC<DemoVideoProps> = ({ t }) => {
+const DemoVideo: React.FC<DemoVideoProps> = ({ t, triggerStyle }) => {
   const { openModal } = useDemoVideoContext()
   const [toast, setToast] = useState<ToastState | null>(null)
 
@@ -60,7 +61,11 @@ const DemoVideo: React.FC<DemoVideoProps> = ({ t }) => {
 
   return (
     <>
-      <DemoVideoTrigger onClick={openModal} text={t.triggerButton} />
+      <DemoVideoTrigger
+        onClick={openModal}
+        text={t.triggerButton}
+        style={triggerStyle}
+      />
       <DemoVideoModal
         t={t.modal}
         onSuccess={handleSuccess}
