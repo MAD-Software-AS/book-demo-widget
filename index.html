@@ -7,7 +7,23 @@
 <body style="margin:0; padding: 0;">
 
 <!-- Widget container -->
-<div id="mad-book-demo-widget"></div>
+<div class="test-container" style="position: relative !important;">
+  <img width="inherit" style="width: 100%;" src="https://cdn.prod.website-files.com/6846900d35050ebd989ab0ea/69cbbdab98fbef52a5ef3869_Skjermbilde%202026-03-31%20kl.%2014.24.07.png" alt="MAD" />
+  <div id="mad-book-demo-widget"></div>
+</div>
+
+<style>
+  .test-container {
+    width: 70%;
+    &:hover {
+      cursor: pointer;
+      img {
+        /* Simple blur effect */
+        filter: blur(2px);
+      }
+    }
+  }
+</style>
 
 <script>
   window.onload = () => {
@@ -15,6 +31,25 @@
       targetId: 'mad-book-demo-widget',
       env: 'dev',
       videoLink: 'https://youtu.be/NpfceNJgThc',
+      containerStyle: {
+        zIndex: 900,
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      triggerStyle: {
+        backgroundColor: 'var(--dark)',
+        color: 'var(--text-color-reverse)',
+        border: 'none',
+        cursor: 'pointer',
+        paddingTop: 0,
+        minHeight: '40px',
+        paddingInline: '32px',
+        paddingBottom: '0px',
+        clipPath: 'var(--clip-path-default)',
+      },
       cssVars: {
         primary: '#00c0b5',
         danger: '#ff6172',
@@ -53,34 +88,27 @@
 
         clipPathDefault: 'polygon(5% 0%, 95% 0%, 100% 15%, 100% 85%, 95% 100%, 5% 100%, 0% 85%, 0% 15%)',
       },
-      // triggerStyle: {
-      //   backgroundColor: 'var(--warning)',
-      //   border: 'none',
-      //   cursor: 'pointer',
-      //   paddingTop: 0,
-      //   minHeight: 'var(--_actions---btn-lg-min-h)',
-      //   paddingRight: 'var(--_actions---btn-lg-px)',
-      //   paddingBottom: 'var(--_actions---btn-lg-pb)',
-      //   paddingLeft: 'var(--_actions---btn-lg-px)',
-      // },
       t: {
-        triggerButton: 'Få demovideo på e-post',
+        triggerButton: 'Se demo',
         modal: {
-          modalTitle: 'Book demo video',
+          modalTitle: 'Se demo video',
           closeButton: 'Lukk',
-          submitButton: 'Book Demo',
+          submitButton: 'Se demo',
+          roles: [['owner', 'Eier'], ['manager', 'Manager'], ['employee', 'Ansatt']],
           form: {
             emailLabel: 'E-post',
-            emailPlaceholder: 'Skriv inn din e-post',
-            companyNameLabel: 'Firmanavn',
-            companyNamePlaceholder: 'Søk etter et firma',
-            organizationNumber: 'Orgnr:',
-            noData: 'Firma ikke funnet'
+            emailPlaceholder: 'Din e-post',
+            nameLabel: 'Salong',
+            namePlaceholder: 'Navn på salong',
+            roleLabel: 'Rolle',
+            rolePlaceholder: 'Hva beskriver deg best?',
           },
           formErrors: {
             emailRequired: 'E-post er påkrevet',
             emailInvalid: 'E-posten er ugyldig',
-            companyNameRequired: 'Firmanavn er påkrevd'
+            nameRequired: 'Navn er påkrevd',
+            roleRequired: 'Rolle er påkrevd',
+            // companyNameRequired: 'Firmanavn er påkrevd'
           },
           successMessage: 'Demovideo sendt!',
           errorMessage: 'Kunne ikke sende demovideo. Vennligst prøv igjen.'

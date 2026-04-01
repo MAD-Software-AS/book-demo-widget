@@ -1,4 +1,5 @@
 import DemoVideoForm, {
+  DemoVideoFormProps,
   validateDemoVideoForm
 } from '../../domains/DemoVideo/components/DemoVideoForm/DemoVideoForm'
 
@@ -11,18 +12,12 @@ export interface DemoVideoModalProps {
     modalTitle: string
     closeButton: string
     submitButton: string
-    form: {
-      emailLabel: string
-      emailPlaceholder: string
-      companyNameLabel: string
-      companyNamePlaceholder: string
-      organizationNumber: string
-      noData: string
-    }
+    form: DemoVideoFormProps['t']
     formErrors: {
       emailRequired: string
       emailInvalid: string
-      companyNameRequired: string
+      nameRequired: string
+      roleRequired: string
     }
     successMessage: string
     errorMessage: string
@@ -59,7 +54,8 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
   const handleSubmit = async () => {
     const validationErrors = validateDemoVideoForm(
       formData.email,
-      formData.selectedCompany
+      formData.name,
+      formData.role
     )
 
     const formattedErrors: Record<string, string | null> = {}
@@ -69,8 +65,11 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
       formattedErrors.email = t.formErrors.emailInvalid
     }
 
-    if (validationErrors.companyName === 'required') {
-      formattedErrors.companyName = t.formErrors.companyNameRequired
+    if (validationErrors.name === 'required') {
+      formattedErrors.name = t.formErrors.nameRequired
+    }
+    if (validationErrors.role === 'required') {
+      formattedErrors.role = t.formErrors.roleRequired
     }
 
     if (Object.keys(formattedErrors).length > 0) {
@@ -85,8 +84,8 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
       const result = await sendDemoVideo(
         {
           customerEmail: formData.email,
-          customerName: formData.selectedCompany?.name,
-          customerOrgNumber: formData.selectedCompany?.orgNumber,
+          customerName: formData.name,
+          customerRole: formData.role,
           videoLink: videoLink
         },
         env

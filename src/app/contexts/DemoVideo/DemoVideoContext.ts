@@ -1,10 +1,9 @@
-import { CompanyType } from '../../domains/Company/Company.constants'
 import { createContext } from 'react'
 
 export interface DemoVideoFormData {
   email: string
-  companyName: string
-  selectedCompany: CompanyType | null
+  name: string
+  role: string | null
 }
 
 export interface DemoVideoState {
@@ -31,8 +30,8 @@ export interface DemoVideoContextValues {
 
 export const initialFormData: DemoVideoFormData = {
   email: '',
-  companyName: '',
-  selectedCompany: null
+  name: '',
+  role: null
 }
 
 export const initialDemoVideoState: DemoVideoState = {
