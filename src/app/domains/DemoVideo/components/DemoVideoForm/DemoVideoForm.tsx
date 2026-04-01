@@ -1,28 +1,30 @@
-import CompanySelect from '../../../../domains/Company/components/CompanySelect/CompanySelect'
-import { CompanyType } from '../../../Company/Company.constants'
 import FormField from '../../../../components/FormField/FormField'
 import React from 'react'
+import RoleSelect from './components/RoleSelect'
 import useDemoVideoContext from '../../../../contexts/DemoVideo/useDemoVideoContext'
 
 export interface DemoVideoFormProps {
   t: {
     emailLabel: string
     emailPlaceholder: string
-    companyNameLabel: string
-    companyNamePlaceholder: string
-    organizationNumber: string
-    noData: string
+    nameLabel: string
+    namePlaceholder: string
+    roleLabel: string
+    rolePlaceholder: string
+    roles: string[][]
   }
 }
 
 export interface DemoVideoFormErrors {
   email?: string | null
-  companyName?: string | null
+  name?: string | null
+  role?: string | null
 }
 
 export const validateDemoVideoForm = (
   email: string,
-  selectedCompany: CompanyType | null
+  name: string,
+  role: string | null
 ): DemoVideoFormErrors => {
   const errors: DemoVideoFormErrors = {}
 
@@ -35,8 +37,12 @@ export const validateDemoVideoForm = (
     }
   }
 
-  if (!selectedCompany) {
-    errors.companyName = 'required'
+  if (!name || name.trim() === '') {
+    errors.name = 'required'
+  }
+
+  if (!role || role.trim() === '') {
+    errors.role = 'required'
   }
 
   return errors
@@ -48,20 +54,18 @@ const DemoVideoForm: React.FC<DemoVideoFormProps> = ({ t }) => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setFormData((prev) => ({ ...prev, email: value }))
-    if (errors.email) {
-      setErrors((prev) => ({ ...prev, email: null }))
-    }
+    if (errors.email) setErrors((prev) => ({ ...prev, email: null }))
   }
 
-  const handleCompanySelect = (company: CompanyType | null) => {
-    setFormData((prev) => ({
-      ...prev,
-      selectedCompany: company,
-      companyName: company?.name || ''
-    }))
-    if (errors.companyName) {
-      setErrors((prev) => ({ ...prev, companyName: null }))
-    }
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setFormData((prev) => ({ ...prev, name: value }))
+    if (errors.name) setErrors((prev) => ({ ...prev, name: null }))
+  }
+
+  const handleRoleChange = (role: string | null) => {
+    setFormData((prev) => ({ ...prev, role: role }))
+    if (errors.role) setErrors((prev) => ({ ...prev, role: null }))
   }
 
   return (
@@ -76,15 +80,25 @@ const DemoVideoForm: React.FC<DemoVideoFormProps> = ({ t }) => {
         />
       </FormField>
 
-      <CompanySelect
-        selectedItem={formData.selectedCompany}
-        setSelectedItem={handleCompanySelect}
-        error={errors.companyName || null}
+      <FormField label={t.nameLabel} error={errors.name || null}>
+        <input
+          type="name"
+          className={`input ${errors.name ? 'input-error' : ''}`}
+          placeholder={t.namePlaceholder}
+          value={formData.name}
+          onChange={handleNameChange}
+        />
+      </FormField>
+
+      <RoleSelect
+        selectedItem={formData.role}
+        setSelectedItem={handleRoleChange}
+        error={errors.role || null}
         t={{
-          fieldLabel: t.companyNameLabel,
-          selectPlaceholder: t.companyNamePlaceholder,
-          organizationNumber: t.organizationNumber,
-          noData: t.noData
+          fieldLabel: t.roleLabel,
+          selectPlaceholder: t.rolePlaceholder,
+          noData: 'Ingen roller funnet',
+          roles: t.roles
         }}
       />
     </div>

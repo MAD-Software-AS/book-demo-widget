@@ -1,8 +1,10 @@
 import DemoVideoForm, {
+  DemoVideoFormProps,
   validateDemoVideoForm
 } from '../../domains/DemoVideo/components/DemoVideoForm/DemoVideoForm'
 
 import React from 'react'
+import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
 import sendDemoVideo from '../../domains/DemoVideo/DemoVideo.service'
 import useDemoVideoContext from '../../contexts/DemoVideo/useDemoVideoContext'
 
@@ -11,18 +13,12 @@ export interface DemoVideoModalProps {
     modalTitle: string
     closeButton: string
     submitButton: string
-    form: {
-      emailLabel: string
-      emailPlaceholder: string
-      companyNameLabel: string
-      companyNamePlaceholder: string
-      organizationNumber: string
-      noData: string
-    }
+    form: DemoVideoFormProps['t']
     formErrors: {
       emailRequired: string
       emailInvalid: string
-      companyNameRequired: string
+      nameRequired: string
+      roleRequired: string
     }
     successMessage: string
     errorMessage: string
@@ -43,9 +39,11 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
     setIsLoading,
     isModalOpen,
     closeModal,
-    reset,
+
     env,
-    videoLink
+    videoLink,
+    isFormSubmitted,
+    setIsFormSubmitted
   } = useDemoVideoContext()
 
   if (!isModalOpen) return null
@@ -59,7 +57,8 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
   const handleSubmit = async () => {
     const validationErrors = validateDemoVideoForm(
       formData.email,
-      formData.selectedCompany
+      formData.name,
+      formData.role
     )
 
     const formattedErrors: Record<string, string | null> = {}
@@ -69,8 +68,11 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
       formattedErrors.email = t.formErrors.emailInvalid
     }
 
-    if (validationErrors.companyName === 'required') {
-      formattedErrors.companyName = t.formErrors.companyNameRequired
+    if (validationErrors.name === 'required') {
+      formattedErrors.name = t.formErrors.nameRequired
+    }
+    if (validationErrors.role === 'required') {
+      formattedErrors.role = t.formErrors.roleRequired
     }
 
     if (Object.keys(formattedErrors).length > 0) {
@@ -85,17 +87,18 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
       const result = await sendDemoVideo(
         {
           customerEmail: formData.email,
-          customerName: formData.selectedCompany?.name,
-          customerOrgNumber: formData.selectedCompany?.orgNumber,
+          customerName: formData.name,
+          customerRole: formData.role,
           videoLink: videoLink
         },
         env
       )
 
       if (result.success) {
-        closeModal()
-        reset()
-        onSuccess(t.successMessage)
+        setIsFormSubmitted(true)
+        // closeModal()
+        // reset()
+        // onSuccess(t.successMessage)
       } else {
         onError(result.error || t.errorMessage)
       }
@@ -116,13 +119,14 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 10000
+    zIndex: 10000,
+    cursor: 'default'
   }
 
   const modalContentStyle: React.CSSProperties = {
     backgroundColor: 'var(--bg-accent)',
     borderRadius: 'var(--border-radius-default)',
-    maxWidth: '500px',
+    maxWidth: '600px',
     width: '90%',
     padding: '24px',
     position: 'relative'
@@ -132,34 +136,42 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
     display: 'flex',
     justifyContent: 'space-between',
     gap: '16px',
-    marginTop: '48px'
+    marginTop: '24px'
   }
 
   return (
     <div style={backdropStyle} onClick={handleBackdropClick}>
       <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
-        <h2 className="subtitle text-center" style={{ marginBottom: '24px' }}>
-          {t.modalTitle}
-        </h2>
+        {!isFormSubmitted && (
+          <h2 className="subtitle text-center" style={{ marginBottom: '24px' }}>
+            {t.modalTitle}
+          </h2>
+        )}
 
-        <DemoVideoForm t={t.form} />
+        {isFormSubmitted ? (
+          <VideoPlayer videoUrl={videoLink} />
+        ) : (
+          <DemoVideoForm t={t.form} />
+        )}
 
-        <div style={buttonsContainerStyle}>
-          <button
-            className="btn btn-dark"
-            onClick={closeModal}
-            disabled={isLoading}
-          >
-            {t.closeButton}
-          </button>
-          <button
-            className="btn btn-primary"
-            onClick={handleSubmit}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Laster...' : t.submitButton}
-          </button>
-        </div>
+        {!isFormSubmitted && (
+          <div style={buttonsContainerStyle}>
+            <button
+              className="btn btn-dark"
+              onClick={closeModal}
+              disabled={isLoading}
+            >
+              {t.closeButton}
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={handleSubmit}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Laster...' : t.submitButton}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

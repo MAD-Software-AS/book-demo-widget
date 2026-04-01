@@ -1,6 +1,7 @@
+import DemoVideoModal, { DemoVideoModalProps } from './DemoVideoModal'
 import React, { useState } from 'react'
 
-import DemoVideoModal from './DemoVideoModal'
+import DemoVideoContainer from './DemoVideoContainer'
 import DemoVideoTrigger from './DemoVideoTrigger'
 import Toast from '../../components/Toast/Toast'
 import useDemoVideoContext from '../../contexts/DemoVideo/useDemoVideoContext'
@@ -8,28 +9,10 @@ import useDemoVideoContext from '../../contexts/DemoVideo/useDemoVideoContext'
 export interface DemoVideoProps {
   t: {
     triggerButton: string
-    modal: {
-      modalTitle: string
-      closeButton: string
-      submitButton: string
-      form: {
-        emailLabel: string
-        emailPlaceholder: string
-        companyNameLabel: string
-        companyNamePlaceholder: string
-        organizationNumber: string
-        noData: string
-      }
-      formErrors: {
-        emailRequired: string
-        emailInvalid: string
-        companyNameRequired: string
-      }
-      successMessage: string
-      errorMessage: string
-    }
+    modal: DemoVideoModalProps['t']
   }
   triggerStyle?: React.CSSProperties
+  containerStyle?: React.CSSProperties
 }
 
 interface ToastState {
@@ -37,7 +20,11 @@ interface ToastState {
   type: 'success' | 'error'
 }
 
-const DemoVideo: React.FC<DemoVideoProps> = ({ t, triggerStyle }) => {
+const DemoVideo: React.FC<DemoVideoProps> = ({
+  t,
+  triggerStyle,
+  containerStyle
+}) => {
   const { openModal } = useDemoVideoContext()
   const [toast, setToast] = useState<ToastState | null>(null)
 
@@ -61,11 +48,13 @@ const DemoVideo: React.FC<DemoVideoProps> = ({ t, triggerStyle }) => {
 
   return (
     <>
-      <DemoVideoTrigger
-        onClick={openModal}
-        text={t.triggerButton}
-        style={triggerStyle}
-      />
+      <DemoVideoContainer onClick={openModal} containerStyle={containerStyle}>
+        <DemoVideoTrigger
+          onClick={openModal}
+          text={t.triggerButton}
+          style={triggerStyle}
+        />
+      </DemoVideoContainer>
       <DemoVideoModal
         t={t.modal}
         onSuccess={handleSuccess}

@@ -3,7 +3,7 @@ import getApiUrl from '../../utils/getApiUrl'
 export interface SendDemoVideoData {
   customerEmail: string
   customerName?: string
-  customerOrgNumber?: string
+  customerRole?: string | null
   videoLink: string
 }
 
@@ -35,6 +35,7 @@ const sendDemoVideo = async (
     }
 
     const result = await response.json()
+
     return {
       success: result.success !== false,
       error: result.error

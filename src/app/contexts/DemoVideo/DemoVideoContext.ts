@@ -1,10 +1,9 @@
-import { CompanyType } from '../../domains/Company/Company.constants'
 import { createContext } from 'react'
 
 export interface DemoVideoFormData {
   email: string
-  companyName: string
-  selectedCompany: CompanyType | null
+  name: string
+  role: string | null
 }
 
 export interface DemoVideoState {
@@ -15,6 +14,7 @@ export interface DemoVideoState {
 }
 
 export interface DemoVideoContextValues {
+  isFormSubmitted: boolean
   formData: DemoVideoFormData
   errors: Record<string, string | null>
   isLoading: boolean
@@ -22,6 +22,7 @@ export interface DemoVideoContextValues {
   setFormData: React.Dispatch<React.SetStateAction<DemoVideoFormData>>
   setErrors: React.Dispatch<React.SetStateAction<Record<string, string | null>>>
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsFormSubmitted: React.Dispatch<React.SetStateAction<boolean>>
   openModal: () => void
   closeModal: () => void
   reset: () => void
@@ -31,8 +32,8 @@ export interface DemoVideoContextValues {
 
 export const initialFormData: DemoVideoFormData = {
   email: '',
-  companyName: '',
-  selectedCompany: null
+  name: '',
+  role: null
 }
 
 export const initialDemoVideoState: DemoVideoState = {
@@ -43,6 +44,7 @@ export const initialDemoVideoState: DemoVideoState = {
 }
 
 const DemoVideoContext = createContext<DemoVideoContextValues>({
+  isFormSubmitted: false,
   formData: initialFormData,
   errors: {},
   isLoading: false,
@@ -52,6 +54,7 @@ const DemoVideoContext = createContext<DemoVideoContextValues>({
   setIsLoading: () => {},
   openModal: () => {},
   closeModal: () => {},
+  setIsFormSubmitted: () => {},
   reset: () => {},
   env: 'dev',
   videoLink: ''
