@@ -1,5 +1,6 @@
 import FormField from '../../../../components/FormField/FormField'
 import React from 'react'
+import RoleSelect from './components/RoleSelect'
 import useDemoVideoContext from '../../../../contexts/DemoVideo/useDemoVideoContext'
 
 export interface DemoVideoFormProps {
@@ -10,6 +11,7 @@ export interface DemoVideoFormProps {
     namePlaceholder: string
     roleLabel: string
     rolePlaceholder: string
+    roles: string[][]
   }
 }
 
@@ -61,16 +63,10 @@ const DemoVideoForm: React.FC<DemoVideoFormProps> = ({ t }) => {
     if (errors.name) setErrors((prev) => ({ ...prev, name: null }))
   }
 
-  // const handleCompanySelect = (company: CompanyType | null) => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     selectedCompany: company,
-  //     companyName: company?.name || ''
-  //   }))
-  //   if (errors.companyName) {
-  //     setErrors((prev) => ({ ...prev, companyName: null }))
-  //   }
-  // }
+  const handleRoleChange = (role: string | null) => {
+    setFormData((prev) => ({ ...prev, role: role }))
+    if (errors.role) setErrors((prev) => ({ ...prev, role: null }))
+  }
 
   return (
     <div>
@@ -94,17 +90,17 @@ const DemoVideoForm: React.FC<DemoVideoFormProps> = ({ t }) => {
         />
       </FormField>
 
-      {/* <CompanySelect
-        selectedItem={formData.selectedCompany}
-        setSelectedItem={handleCompanySelect}
-        error={errors.companyName || null}
+      <RoleSelect
+        selectedItem={formData.role}
+        setSelectedItem={handleRoleChange}
+        error={errors.role || null}
         t={{
-          fieldLabel: t.companyNameLabel,
-          selectPlaceholder: t.companyNamePlaceholder,
-          organizationNumber: t.organizationNumber,
-          noData: t.noData
+          fieldLabel: t.roleLabel,
+          selectPlaceholder: t.rolePlaceholder,
+          noData: 'Ingen roller funnet',
+          roles: t.roles
         }}
-      /> */}
+      />
     </div>
   )
 }

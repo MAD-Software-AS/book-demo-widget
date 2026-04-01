@@ -35,6 +35,7 @@ const sendDemoVideo = async (
     }
 
     const result = await response.json()
+
     return {
       success: result.success !== false,
       error: result.error

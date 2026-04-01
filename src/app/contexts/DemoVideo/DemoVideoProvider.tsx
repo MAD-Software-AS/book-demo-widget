@@ -1,5 +1,5 @@
+import DemoVideoContext, { initialFormData } from './DemoVideoContext'
 import React, { useState } from 'react'
-import DemoVideoContext, { initialFormData, initialDemoVideoState } from './DemoVideoContext'
 
 interface DemoVideoProviderProps {
   children: React.ReactElement | React.ReactElement[] | string
@@ -16,6 +16,7 @@ const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
   const [errors, setErrors] = useState<Record<string, string | null>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false)
 
   const openModal = () => {
     setIsModalOpen(true)
@@ -34,6 +35,8 @@ const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
   return (
     <DemoVideoContext.Provider
       value={{
+        isFormSubmitted,
+        setIsFormSubmitted,
         formData,
         errors,
         isLoading,
@@ -54,4 +57,3 @@ const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
 }
 
 export default DemoVideoProvider
-

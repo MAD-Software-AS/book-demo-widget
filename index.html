@@ -19,7 +19,7 @@
       cursor: pointer;
       img {
         /* Simple blur effect */
-        filter: blur(2px);
+        filter: blur(10px);
       }
     }
   }
@@ -31,6 +31,7 @@
       targetId: 'mad-book-demo-widget',
       env: 'dev',
       videoLink: 'https://youtu.be/NpfceNJgThc',
+      // videoLink: 'https://vimeo.com/347119375',
       containerStyle: {
         zIndex: 900,
         position: 'absolute',
@@ -94,8 +95,8 @@
           modalTitle: 'Se demo video',
           closeButton: 'Lukk',
           submitButton: 'Se demo',
-          roles: [['owner', 'Eier'], ['manager', 'Manager'], ['employee', 'Ansatt']],
           form: {
+            roles: [['owner', 'Eier'], ['manager', 'Manager'], ['employee', 'Ansatt']],
             emailLabel: 'E-post',
             emailPlaceholder: 'Din e-post',
             nameLabel: 'Salong',
