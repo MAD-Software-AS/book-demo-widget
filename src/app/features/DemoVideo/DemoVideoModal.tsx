@@ -136,7 +136,7 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
     display: 'flex',
     justifyContent: 'space-between',
     gap: '16px',
-    marginTop: '24px'
+    marginTop: '32px'
   }
 
   return (
