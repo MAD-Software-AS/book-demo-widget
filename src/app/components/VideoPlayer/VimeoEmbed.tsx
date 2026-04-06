@@ -64,10 +64,11 @@ export const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
         player = new Player(el, {
           url: videoUrl.trim() as VimeoUrl,
           autoplay: true,
-          muted: true,
+          muted: false,
           playsinline: true,
           responsive: true,
-          vimeo_logo: false
+          vimeo_logo: false,
+          byline: false
         })
         await player.ready()
         if (cancelled) {

@@ -1,6 +1,7 @@
 import DemoVideoContext, { initialFormData } from './DemoVideoContext'
 import React, { useState } from 'react'
 
+// const VIDEO_URL = 'https://vimeo.com/753580183'
 const VIDEO_URL =
   'https://player.vimeo.com/video/1180278253?h=bdafd62d33&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
 
@@ -17,7 +18,7 @@ const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
   const [errors, setErrors] = useState<Record<string, string | null>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false)
+  const [isFormSubmitted, setIsFormSubmitted] = useState(true)
 
   const openModal = () => {
     setIsModalOpen(true)
