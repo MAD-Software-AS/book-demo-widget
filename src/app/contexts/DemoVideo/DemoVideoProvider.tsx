@@ -1,16 +1,17 @@
 import DemoVideoContext, { initialFormData } from './DemoVideoContext'
 import React, { useState } from 'react'
 
+const VIDEO_URL =
+  'https://player.vimeo.com/video/1180278253?h=bdafd62d33&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
+
 interface DemoVideoProviderProps {
   children: React.ReactElement | React.ReactElement[] | string
   env: string
-  videoLink: string
 }
 
 const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
   children,
-  env,
-  videoLink
+  env
 }) => {
   const [formData, setFormData] = useState(initialFormData)
   const [errors, setErrors] = useState<Record<string, string | null>>({})
@@ -48,7 +49,7 @@ const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
         closeModal,
         reset,
         env,
-        videoLink
+        videoLink: VIDEO_URL
       }}
     >
       {children}

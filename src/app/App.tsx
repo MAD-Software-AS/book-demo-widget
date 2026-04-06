@@ -6,20 +6,13 @@ import React from 'react'
 interface AppProps {
   t: DemoVideoProps['t']
   env: string
-  videoLink: string
   triggerStyle?: React.CSSProperties
   containerStyle?: React.CSSProperties
 }
 
-const App: React.FC<AppProps> = ({
-  env,
-  t,
-  videoLink,
-  triggerStyle,
-  containerStyle
-}) => {
+const App: React.FC<AppProps> = ({ env, t, triggerStyle, containerStyle }) => {
   return (
-    <DemoVideoProvider env={env} videoLink={videoLink}>
+    <DemoVideoProvider env={env}>
       <DemoVideo
         t={t}
         triggerStyle={triggerStyle}

@@ -1,9 +1,9 @@
 declare global {
   interface Window {
-    fbq?: (...args: any[]) => void
+    fbq?: (...args: unknown[]) => void
+    gtag?: (...args: unknown[]) => void
+    dataLayer?: Record<string, unknown>[]
   }
-
-  const fbq: (...args: any[]) => void
 }
 
 export {}
