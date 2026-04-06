@@ -4,10 +4,10 @@ export type DemoVideoMilestone = 25 | 50 | 75 | 100
 const POLL_MS = 250
 const MAX_POLLS = 10
 
-const GA_PLAY = 'video_play'
-const GA_PROGRESS = 'video_progress'
-const META_PLAY = 'VideoPlay'
-const META_PROGRESS = 'VideoProgress'
+const GA_PLAY = 'demo_video_play'
+const GA_PROGRESS = 'demo_video_progress'
+const META_PLAY = 'DemoVideoPlay'
+const META_PROGRESS = 'DemoVideoProgress'
 
 const LOG_NS = '[MAD demo video analytics]'
 

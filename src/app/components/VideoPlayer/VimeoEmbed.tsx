@@ -66,7 +66,8 @@ export const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
           autoplay: true,
           muted: true,
           playsinline: true,
-          responsive: true
+          responsive: true,
+          vimeo_logo: false
         })
         await player.ready()
         if (cancelled) {
@@ -93,9 +94,7 @@ export const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
         player.on('ended', () => {
           recordProgress(100)
         })
-      } catch {
-        /* oEmbed / мережа / embeddable */
-      }
+      } catch {}
     }
 
     void init()

@@ -14,7 +14,6 @@ const getVimeoEmbedUrl = (url: URL): string | null => {
   return null
 }
 
-/** null, якщо посилання не Vimeo або некоректне. */
 export function getVimeoEmbedSrc(videoUrl: string): string | null {
   const trimmedUrl = videoUrl.trim()
   if (!trimmedUrl) {

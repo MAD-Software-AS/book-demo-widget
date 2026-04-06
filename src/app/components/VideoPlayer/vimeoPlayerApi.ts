@@ -1,12 +1,11 @@
-import type Player from '@vimeo/player'
 import { useCallback, useEffect, useRef } from 'react'
 
+import type Player from '@vimeo/player'
 import { trackDemoVideoProgressMilestone } from '../../utils/demoVideoAnalytics'
 
 export const MILESTONES = [25, 50, 75, 100] as const
 export type VimeoProgressMilestone = (typeof MILESTONES)[number]
 
-/** Розширення точки входу (викликається після відправки в GA / Meta). */
 export function onVimeoDemoProgressMilestone(
   _milestone: VimeoProgressMilestone,
   _videoUrl: string
