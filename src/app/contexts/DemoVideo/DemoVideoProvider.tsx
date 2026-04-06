@@ -18,7 +18,7 @@ const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
   const [errors, setErrors] = useState<Record<string, string | null>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isFormSubmitted, setIsFormSubmitted] = useState(true)
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false)
 
   const openModal = () => {
     setIsModalOpen(true)
