@@ -15,17 +15,17 @@
     --text-color-placeholder: #6B7280;
 
     /* Fonts */
-    --font-title: "Segoe UI", Arial, sans-serif;
-    --font-default: "Segoe UI", Arial, sans-serif;
+    --font-title: Segoeuithis,Arial,sans-serif;
+    --font-default: Segoeuithis,Arial,sans-serif;
     --font-demo-button: inherit;
 
-    --font-size-default: 15px;
+    --font-size-default: 16px;
     --font-size-title: 24px;
     --font-size-subtitle: 18px;
     --font-size-controls: 18px;
     --font-size-caption: 15px;
 
-    --line-height-default: 20px;
+    --line-height-default: 24px;
     --line-height-title: 32px;
     --line-height-subtitle: 24px;
     --line-height-controls: 20px;
@@ -35,4 +35,6 @@
     --border-radius-xl: 24px;
     --border-radius-md: 8px;
     --border-radius-sm: 4px;
+
+    --letter-spacing-default: 1px;
 }

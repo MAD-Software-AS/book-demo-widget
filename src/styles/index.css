@@ -81,6 +81,7 @@
   color: var(--text-color-default);
   font-size: var(--font-size-title);
   line-height: var(--line-height-title);
+  letter-spacing: var(--letter-spacing-default);
   font-family: var(--font-title);
   font-weight: 700;
 }
@@ -356,6 +357,7 @@ input::placeholder {
 .demo-video-modal__gate-description {
   font-size: var(--font-size-default);
   font-family: var(--font-default);
+  letter-spacing: var(--letter-spacing-default);
   margin: 0 0 24px;
   text-align: center;
 }
