@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { memo, useCallback } from 'react'
 
+import Player from '@vimeo/player'
 import { VimeoEmbed } from './VimeoEmbed'
-import { useVimeoMilestones } from './vimeoPlayerApi'
 import { getVimeoEmbedSrc } from './vimeoVideoUrl'
+import { useVimeoMilestones } from './vimeoPlayerApi'
 
 export type { VimeoProgressMilestone } from './vimeoPlayerApi'
 export {
@@ -13,11 +14,23 @@ export {
 
 export interface VideoPlayerProps {
   videoUrl: string
+  progressCallback: (percent: number, seconds: number, player: Player) => void
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({
+  videoUrl,
+  progressCallback
+}) => {
   const embedSrc = getVimeoEmbedSrc(videoUrl)
   const { recordProgress } = useVimeoMilestones(videoUrl)
+
+  const handleProgress = useCallback(
+    (percent: number, seconds: number, player: Player) => {
+      recordProgress(percent, seconds)
+      progressCallback(percent, seconds, player)
+    },
+    [recordProgress, progressCallback]
+  )
 
   return (
     <div
@@ -30,7 +43,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl }) => {
       }}
     >
       {embedSrc && (
-        <VimeoEmbed videoUrl={videoUrl} recordProgress={recordProgress} />
+        <VimeoEmbed videoUrl={videoUrl} recordProgress={handleProgress} />
       )}
 
       {!embedSrc && (
@@ -54,4 +67,4 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl }) => {
   )
 }
 
-export default VideoPlayer
+export default memo(VideoPlayer)

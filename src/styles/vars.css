@@ -15,8 +15,8 @@
     --text-color-placeholder: #6B7280;
 
     /* Fonts */
-    --font-title: "Open Sans Condensed", sans-serif;
-    --font-default: "Open Sans", sans-serif;
+    --font-title: "Segoe UI", Arial, sans-serif;
+    --font-default: "Segoe UI", Arial, sans-serif;
     --font-demo-button: inherit;
 
     --font-size-default: 15px;
@@ -35,7 +35,4 @@
     --border-radius-xl: 24px;
     --border-radius-md: 8px;
     --border-radius-sm: 4px;
-
-    /* Clip */
-    --clip-path-default: none;
 }

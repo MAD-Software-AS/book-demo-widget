@@ -27,10 +27,11 @@ export function useVimeoMilestones(videoUrl: string) {
   }, [videoUrl, reset])
 
   const recordProgress = useCallback(
-    (percent: number) => {
+    (percent: number, seconds: number) => {
       if (!Number.isFinite(percent)) {
         return
       }
+
       const url = videoUrl.trim()
       for (const m of MILESTONES) {
         if (percent >= m && !fired.current.has(m)) {

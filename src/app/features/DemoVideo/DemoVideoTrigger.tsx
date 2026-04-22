@@ -2,13 +2,13 @@ import React from 'react'
 
 export interface DemoVideoTriggerProps {
   onClick: () => void
-  text: string
+  text?: string
   style?: React.CSSProperties
 }
 
 const DemoVideoTrigger: React.FC<DemoVideoTriggerProps> = ({
   onClick,
-  text,
+  text = 'Se demo',
   style
 }) => {
   const defaultStyle: React.CSSProperties = {

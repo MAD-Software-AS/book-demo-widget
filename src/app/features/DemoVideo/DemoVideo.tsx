@@ -7,9 +7,9 @@ import Toast from '../../components/Toast/Toast'
 import useDemoVideoContext from '../../contexts/DemoVideo/useDemoVideoContext'
 
 export interface DemoVideoProps {
-  t: {
-    triggerButton: string
-    modal: DemoVideoModalProps['t']
+  t?: {
+    triggerButton?: string
+    modal?: DemoVideoModalProps['t']
   }
   triggerStyle?: React.CSSProperties
   containerStyle?: React.CSSProperties
@@ -21,30 +21,21 @@ interface ToastState {
 }
 
 const DemoVideo: React.FC<DemoVideoProps> = ({
-  t,
+  t = {
+    triggerButton: undefined,
+    modal: undefined
+  },
   triggerStyle,
   containerStyle
 }) => {
   const { openModal } = useDemoVideoContext()
   const [toast, setToast] = useState<ToastState | null>(null)
 
-  const handleSuccess = (message: string) => {
-    setToast({
-      message,
-      type: 'success'
-    })
-  }
-
   const handleError = (message: string) => {
-    setToast({
-      message,
-      type: 'error'
-    })
+    setToast({ message, type: 'error' })
   }
 
-  const handleCloseToast = () => {
-    setToast(null)
-  }
+  const handleCloseToast = () => setToast(null)
 
   return (
     <>
@@ -55,11 +46,7 @@ const DemoVideo: React.FC<DemoVideoProps> = ({
           style={triggerStyle}
         />
       </DemoVideoContainer>
-      <DemoVideoModal
-        t={t.modal}
-        onSuccess={handleSuccess}
-        onError={handleError}
-      />
+      <DemoVideoModal t={t.modal} onError={handleError} />
       {toast && (
         <Toast
           message={toast.message}

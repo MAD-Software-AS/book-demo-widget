@@ -6,10 +6,11 @@ import {
   onVimeoDemoPlayStarted,
   onVimeoDemoPlayerReady
 } from './vimeoPlayerApi'
+import useDemoVideoContext from '../../contexts/DemoVideo/useDemoVideoContext'
 
 export interface VimeoEmbedProps {
   videoUrl: string
-  recordProgress: (percent: number) => void
+  recordProgress: (percent: number, seconds: number, player: Player) => void
 }
 
 function sizeVimeoToContainer(container: HTMLElement) {
@@ -48,6 +49,7 @@ export const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
   videoUrl,
   recordProgress
 }) => {
+  const { setPlayer } = useDemoVideoContext()
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -89,11 +91,13 @@ export const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
           onVimeoDemoPlayStarted(trimmed)
         })
 
+        setPlayer(player)
+
         player.on('timeupdate', (data) => {
-          recordProgress(data.percent * 100)
+          recordProgress(data.percent * 100, data.seconds, player!)
         })
-        player.on('ended', () => {
-          recordProgress(100)
+        player.on('ended', (data) => {
+          recordProgress(100, data.seconds, player!)
         })
       } catch {}
     }

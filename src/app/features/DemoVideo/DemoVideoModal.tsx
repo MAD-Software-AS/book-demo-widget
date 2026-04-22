@@ -2,18 +2,21 @@ import DemoVideoForm, {
   DemoVideoFormProps,
   validateDemoVideoForm
 } from '../../domains/DemoVideo/components/DemoVideoForm/DemoVideoForm'
+import React, { useCallback } from 'react'
 
-import React from 'react'
+import Player from '@vimeo/player'
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
 import sendDemoVideo from '../../domains/DemoVideo/DemoVideo.service'
 import useDemoVideoContext from '../../contexts/DemoVideo/useDemoVideoContext'
 
 export interface DemoVideoModalProps {
-  t: {
-    modalTitle: string
+  t?: {
+    form?: DemoVideoFormProps['t'] | undefined
+    gateTitle?: string
+    gateDescription?: string
     closeButton: string
     submitButton: string
-    form: DemoVideoFormProps['t']
+    submitLoading?: string
     formErrors: {
       emailRequired: string
       emailInvalid: string
@@ -23,13 +26,27 @@ export interface DemoVideoModalProps {
     successMessage: string
     errorMessage: string
   }
-  onSuccess: (message: string) => void
   onError: (message: string) => void
 }
 
 const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
-  t,
-  onSuccess,
+  t = {
+    form: undefined,
+    gateTitle: 'Se resten av demoen',
+    gateDescription:
+      'Se hvordan salonger får full kontroll, sparer tid og skaper ny motivasjon i teamet.',
+    submitButton: 'Se hele demoen',
+    submitLoading: 'Laster...',
+    closeButton: 'Ikke nå',
+    formErrors: {
+      emailRequired: 'E-post er påkrevet',
+      emailInvalid: 'E-posten er ugyldig',
+      nameRequired: 'Navn er påkrevd',
+      roleRequired: 'Rolle er påkrevd'
+    },
+    successMessage: 'Demovideo sendt!',
+    errorMessage: 'Kunne ikke sende demovideo. Vennligst prøv igjen.'
+  },
   onError
 }) => {
   const {
@@ -43,8 +60,24 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
     env,
     videoLink,
     isFormSubmitted,
-    setIsFormSubmitted
+    setIsFormSubmitted,
+    isCheckPointReached,
+    setIsCheckPointReached,
+    player
   } = useDemoVideoContext()
+
+  const progressCallback = useCallback(
+    (percent: number, seconds: number, player: Player) => {
+      if (seconds >= 33) {
+        setIsCheckPointReached((prev) => {
+          if (prev) return prev
+          player.pause()
+          return true
+        })
+      }
+    },
+    []
+  )
 
   if (!isModalOpen) return null
 
@@ -55,24 +88,13 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
   }
 
   const handleSubmit = async () => {
-    const validationErrors = validateDemoVideoForm(
-      formData.email,
-      formData.name,
-      formData.role
-    )
+    const validationErrors = validateDemoVideoForm(formData.email)
 
     const formattedErrors: Record<string, string | null> = {}
     if (validationErrors.email === 'required') {
       formattedErrors.email = t.formErrors.emailRequired
     } else if (validationErrors.email === 'invalid') {
       formattedErrors.email = t.formErrors.emailInvalid
-    }
-
-    if (validationErrors.name === 'required') {
-      formattedErrors.name = t.formErrors.nameRequired
-    }
-    if (validationErrors.role === 'required') {
-      formattedErrors.role = t.formErrors.roleRequired
     }
 
     if (Object.keys(formattedErrors).length > 0) {
@@ -96,9 +118,7 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
 
       if (result.success) {
         setIsFormSubmitted(true)
-        // closeModal()
-        // reset()
-        // onSuccess(t.successMessage)
+        player?.play()
       } else {
         onError(result.error || t.errorMessage)
       }
@@ -109,69 +129,62 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
     }
   }
 
-  const backdropStyle: React.CSSProperties = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 10000,
-    cursor: 'default'
-  }
+  const isGateForm = isCheckPointReached && !isFormSubmitted
 
-  const modalContentStyle: React.CSSProperties = {
-    backgroundColor: 'var(--bg-accent)',
-    borderRadius: 'var(--border-radius-default)',
-    maxWidth: '600px',
-    width: '90%',
-    padding: '24px',
-    position: 'relative'
-  }
-
-  const buttonsContainerStyle: React.CSSProperties = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '16px',
-    marginTop: '32px'
-  }
+  const backdropClassName = `demo-video-modal__backdrop${
+    isGateForm ? ' demo-video-modal__backdrop--gate' : ''
+  }`
+  const contentClassName = `demo-video-modal__content${
+    isGateForm ? ' demo-video-modal__content--gate' : ''
+  }`
+  const dismissButtonClassName = `demo-video-modal__dismiss-button${
+    isLoading ? ' demo-video-modal__dismiss-button--disabled' : ''
+  }`
 
   return (
-    <div style={backdropStyle} onClick={handleBackdropClick}>
-      <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
-        {!isFormSubmitted && (
-          <h2 className="subtitle text-center" style={{ marginBottom: '24px' }}>
-            {t.modalTitle}
-          </h2>
-        )}
-
-        {isFormSubmitted ? (
-          <VideoPlayer videoUrl={videoLink} />
-        ) : (
-          <DemoVideoForm t={t.form} />
-        )}
-
-        {!isFormSubmitted && (
-          <div style={buttonsContainerStyle}>
+    <div className={backdropClassName} onClick={handleBackdropClick}>
+      <div className={contentClassName} onClick={(e) => e.stopPropagation()}>
+        {isGateForm && (
+          <div className="demo-video-modal__gate">
+            <h2 className="title-1 text-center demo-video-modal__gate-title">
+              {t.gateTitle}
+            </h2>
+            <p className="demo-video-modal__gate-description">
+              {t.gateDescription}
+            </p>
+            <DemoVideoForm hideEmailLabel t={t.form} />
             <button
-              className="btn btn-dark"
-              onClick={closeModal}
-              disabled={isLoading}
-            >
-              {t.closeButton}
-            </button>
-            <button
-              className="btn btn-primary"
+              type="button"
+              className="btn btn-primary demo-video-modal__primary-button"
               onClick={handleSubmit}
               disabled={isLoading}
             >
-              {isLoading ? 'Laster...' : t.submitButton}
+              {isLoading ? t.submitLoading : t.submitButton}
             </button>
+            <div className="demo-video-modal__dismiss-row">
+              <span className="demo-video-modal__dismiss-divider" />
+              <button
+                type="button"
+                className={dismissButtonClassName}
+                onClick={closeModal}
+                disabled={isLoading}
+              >
+                {t.closeButton}
+              </button>
+              <span className="demo-video-modal__dismiss-divider" />
+            </div>
           </div>
         )}
+        <div
+          style={{
+            display: isGateForm ? 'none' : 'block'
+          }}
+        >
+          <VideoPlayer
+            videoUrl={videoLink}
+            progressCallback={progressCallback}
+          />
+        </div>
       </div>
     </div>
   )

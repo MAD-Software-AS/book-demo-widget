@@ -1,3 +1,4 @@
+import Player from '@vimeo/player'
 import { createContext } from 'react'
 
 export interface DemoVideoFormData {
@@ -28,6 +29,10 @@ export interface DemoVideoContextValues {
   reset: () => void
   env: string
   videoLink: string
+  isCheckPointReached: boolean
+  setIsCheckPointReached: React.Dispatch<React.SetStateAction<boolean>>
+  player: Player | null
+  setPlayer: React.Dispatch<React.SetStateAction<Player | null>>
 }
 
 export const initialFormData: DemoVideoFormData = {
@@ -57,7 +62,11 @@ const DemoVideoContext = createContext<DemoVideoContextValues>({
   setIsFormSubmitted: () => {},
   reset: () => {},
   env: 'dev',
-  videoLink: ''
+  videoLink: '',
+  isCheckPointReached: false,
+  setIsCheckPointReached: () => {},
+  player: null,
+  setPlayer: () => {}
 })
 
 export default DemoVideoContext
