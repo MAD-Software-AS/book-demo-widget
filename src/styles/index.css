@@ -358,6 +358,7 @@ input::placeholder {
   font-size: var(--font-size-default);
   font-family: var(--font-default);
   letter-spacing: var(--letter-spacing-default);
+  line-height: var(--line-height-default);
   margin: 0 0 24px;
   text-align: center;
 }
