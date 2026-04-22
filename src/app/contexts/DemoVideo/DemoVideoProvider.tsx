@@ -24,8 +24,14 @@ const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
   const [isCheckPointReached, setIsCheckPointReached] = useState(false)
   const [player, setPlayer] = useState<Player | null>(null)
 
-  const openModal = () => setIsModalOpen(true)
-  const closeModal = () => setIsModalOpen(false)
+  const openModal = () => {
+    setIsModalOpen(true)
+    if (!isCheckPointReached || isFormSubmitted) player?.play()
+  }
+  const closeModal = () => {
+    setIsModalOpen(false)
+    player?.pause()
+  }
 
   const reset = () => {
     setFormData(initialFormData)

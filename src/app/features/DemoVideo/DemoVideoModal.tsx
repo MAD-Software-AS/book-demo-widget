@@ -66,21 +66,6 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
     player
   } = useDemoVideoContext()
 
-  const progressCallback = useCallback(
-    (percent: number, seconds: number, player: Player) => {
-      if (seconds >= 33) {
-        setIsCheckPointReached((prev) => {
-          if (prev) return prev
-          player.pause()
-          return true
-        })
-      }
-    },
-    []
-  )
-
-  if (!isModalOpen) return null
-
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeModal()
@@ -129,6 +114,21 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
     }
   }
 
+  const progressCallback = useCallback(
+    (percent: number, seconds: number, player: Player) => {
+      if (seconds >= 33) {
+        setIsCheckPointReached((prev) => {
+          if (prev) return prev
+          player.exitFullscreen()
+          player.exitPictureInPicture()
+          player.pause()
+          return true
+        })
+      }
+    },
+    []
+  )
+
   const isGateForm = isCheckPointReached && !isFormSubmitted
 
   const backdropClassName = `demo-video-modal__backdrop${
@@ -142,7 +142,13 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({
   }`
 
   return (
-    <div className={backdropClassName} onClick={handleBackdropClick}>
+    <div
+      style={{
+        display: isModalOpen ? 'flex' : 'none'
+      }}
+      className={backdropClassName}
+      onClick={handleBackdropClick}
+    >
       <div className={contentClassName} onClick={(e) => e.stopPropagation()}>
         {isGateForm && (
           <div className="demo-video-modal__gate">
