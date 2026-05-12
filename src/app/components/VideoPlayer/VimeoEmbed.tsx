@@ -67,7 +67,7 @@ export const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
           url: videoUrl.trim() as VimeoUrl,
           autoplay: false,
           // Required for reliable programmatic play on iOS (modal open calls player.play()).
-          muted: true,
+          muted: false,
           playsinline: true,
           responsive: true,
           vimeo_logo: false,
