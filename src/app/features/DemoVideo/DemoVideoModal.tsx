@@ -1,27 +1,42 @@
-import DemoVideoForm, {
-  DemoVideoFormProps
-} from '../../domains/DemoVideo/components/DemoVideoForm/DemoVideoForm'
 import React, { useCallback } from 'react'
 
+import CalendarWidget from '../CalendarWidget/CalendarWidget'
+import MadStart from './components/MadStart/MadStart'
 import Player from '@vimeo/player'
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
 import useDemoVideoContext from '../../contexts/DemoVideo/useDemoVideoContext'
 
-export interface DemoVideoModalProps {
-  t: {
-    emailForm: DemoVideoFormProps['t']
+export interface DemoVideoModalTranslations {
+  dividerLabel: string
+  madStart: {
+    title: string
+    subtitle: string
+    features: string[]
+    buttonText: string
+    signupUrl: string
   }
+  calendar: {
+    title: string
+    description: string
+    buttonText: string
+    url?: string
+  }
+}
+
+export interface DemoVideoModalProps {
+  t: DemoVideoModalTranslations
   onError: (message: string) => void
 }
 
-const DemoVideoModal: React.FC<DemoVideoModalProps> = ({ t, onError }) => {
+const DemoVideoModal: React.FC<DemoVideoModalProps> = ({ t }) => {
   const {
     isModalOpen,
     closeModal,
     videoLink,
-    isFormSubmitted,
     isCheckPointReached,
-    setIsCheckPointReached
+    setIsCheckPointReached,
+    isCalendarVisible,
+    setIsCalendarVisible
   } = useDemoVideoContext()
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -31,8 +46,7 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({ t, onError }) => {
   }
 
   const progressCallback = useCallback(
-    (percent: number, seconds: number, player: Player) => {
-      // if (seconds >= 33) {
+    (percent: number, _seconds: number, player: Player) => {
       if (percent >= 100) {
         setIsCheckPointReached((prev) => {
           if (prev) return prev
@@ -43,17 +57,18 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({ t, onError }) => {
         })
       }
     },
-    []
+    [setIsCheckPointReached]
   )
 
-  const isGateForm = isCheckPointReached && !isFormSubmitted
+  const isGate = isCheckPointReached
+  const showVideo = !isGate
 
   const backdropClassName = `demo-video-modal__backdrop${
-    isGateForm ? ' demo-video-modal__backdrop--gate' : ''
+    isGate ? ' demo-video-modal__backdrop--gate' : ''
   }`
   const contentClassName = `demo-video-modal__content${
-    isGateForm ? ' demo-video-modal__content--gate' : ''
-  }`
+    isGate ? ' demo-video-modal-wrapper' : ''
+  }${isCalendarVisible ? ' demo-video-modal__content--calendar' : ''}`
 
   return (
     <div
@@ -64,21 +79,44 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({ t, onError }) => {
       onClick={handleBackdropClick}
     >
       <div className={contentClassName} onClick={(e) => e.stopPropagation()}>
-        {isGateForm && (
-          <div className="demo-video-modal__gate">
-            <DemoVideoForm hideEmailLabel t={t.emailForm} onError={onError} />
+        {isGate && !isCalendarVisible && (
+          <div className="demo-video-modal__gate demo-video-modal__gate--choices">
+            <MadStart
+              title={t.madStart.title}
+              subtitle={t.madStart.subtitle}
+              features={t.madStart.features}
+              buttonText={t.madStart.buttonText}
+              signupUrl={t.madStart.signupUrl}
+            />
+            <div
+              className="demo-video-modal__gate-divider"
+              aria-hidden={false}
+              role="separator"
+            >
+              <span className="demo-video-modal__gate-divider-label">
+                {t.dividerLabel}
+              </span>
+            </div>
+            <CalendarWidget
+              title={t.calendar.title}
+              description={t.calendar.description}
+              buttonText={t.calendar.buttonText}
+              url={t.calendar.url}
+              onBookClick={() => setIsCalendarVisible(true)}
+            />
           </div>
         )}
-        <div
-          style={{
-            display: isGateForm ? 'none' : 'block'
-          }}
-        >
+        {isGate && isCalendarVisible && (
+          <div className="demo-video-modal__gate demo-video-modal__gate--calendar">
+            <CalendarWidget showEmbed url={t.calendar.url} />
+          </div>
+        )}
+        {showVideo && (
           <VideoPlayer
             videoUrl={videoLink}
             progressCallback={progressCallback}
           />
-        </div>
+        )}
       </div>
     </div>
   )

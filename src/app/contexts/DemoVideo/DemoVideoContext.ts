@@ -31,6 +31,8 @@ export interface DemoVideoContextValues {
   videoLink: string
   isCheckPointReached: boolean
   setIsCheckPointReached: React.Dispatch<React.SetStateAction<boolean>>
+  isCalendarVisible: boolean
+  setIsCalendarVisible: React.Dispatch<React.SetStateAction<boolean>>
   player: Player | null
   setPlayer: React.Dispatch<React.SetStateAction<Player | null>>
 }
@@ -65,6 +67,8 @@ const DemoVideoContext = createContext<DemoVideoContextValues>({
   videoLink: '',
   isCheckPointReached: false,
   setIsCheckPointReached: () => {},
+  isCalendarVisible: false,
+  setIsCalendarVisible: () => {},
   player: null,
   setPlayer: () => {}
 })
