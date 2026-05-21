@@ -343,6 +343,7 @@ input::placeholder {
   padding: 24px 0;
   max-width: 420px;
   width: 90%;
+  max-height: 80%;
 }
 
 .demo-video-modal-wrapper.demo-video-modal__content--calendar {
@@ -392,6 +393,7 @@ input::placeholder {
   text-align: center;
   flex: 1;
   min-width: 0;
+  max-height: 500px;
 }
 
 .demo-video-gate-panel__icon {
