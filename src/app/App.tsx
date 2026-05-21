@@ -4,7 +4,7 @@ import DemoVideoProvider from './contexts/DemoVideo/DemoVideoProvider'
 import React from 'react'
 
 interface AppProps {
-  t?: DemoVideoProps['t']
+  t: DemoVideoProps['t']
   env?: 'dev' | 'prod' | 'dev-local' | 'prod-local'
   triggerStyle?: React.CSSProperties
   containerStyle?: React.CSSProperties

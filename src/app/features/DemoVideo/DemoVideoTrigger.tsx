@@ -2,7 +2,7 @@ import React from 'react'
 
 export interface DemoVideoTriggerProps {
   onClick: () => void
-  text?: string
+  text: string
   style?: React.CSSProperties
 }
 
