@@ -342,7 +342,7 @@ input::placeholder {
 }
 
 .demo-video-modal-wrapper {
-  padding: 24px 0;
+  padding: 24px 4px;
   max-width: 420px;
   width: 90%;
   max-height: 80%;
