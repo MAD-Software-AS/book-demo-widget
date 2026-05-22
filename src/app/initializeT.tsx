@@ -1,4 +1,4 @@
-import { DemoVideoModalTranslations } from './features/DemoVideo/DemoVideoModal'
+import { DemoVideoModalTranslations } from './features/DemoVideoWidget/components/DemoVideoModal/DemoVideoModal'
 import { mergeNestedObjects } from './utils/nestedObjects'
 
 export interface WidgetTranslations {

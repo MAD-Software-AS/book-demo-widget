@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react'
 
-import CalendarWidget from '../CalendarWidget/CalendarWidget'
-import MadStart from './components/MadStart/MadStart'
+import CalendarWidget from '../../../CalendarWidget/CalendarWidget'
+import MadStart from '../MadStart/MadStart'
 import Player from '@vimeo/player'
-import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'
-import useDemoVideoContext from '../../contexts/DemoVideo/useDemoVideoContext'
+import VideoPlayer from '../../../../components/VideoPlayer/VideoPlayer'
+import useDemoVideoContext from '../../../../contexts/DemoVideo/useDemoVideoContext'
 
 export interface DemoVideoModalTranslations {
   dividerLabel: string
@@ -47,7 +47,7 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({ t }) => {
 
   const progressCallback = useCallback(
     (percent: number, _seconds: number, player: Player) => {
-      if (percent >= 100) {
+      if (_seconds >= 132) {
         setIsCheckPointReached((prev) => {
           if (prev) return prev
           player.exitFullscreen()

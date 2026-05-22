@@ -64,6 +64,7 @@ export default function createComponent(config: any) {
           <App
             env={widgetConfig.env || 'prod'}
             t={widgetConfig.t}
+            videoLink={widgetConfig.videoLink || undefined}
             triggerStyle={widgetConfig.triggerStyle || undefined}
             containerStyle={widgetConfig.containerStyle || undefined}
           />

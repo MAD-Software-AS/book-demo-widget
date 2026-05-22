@@ -4,16 +4,17 @@ import React, { useState } from 'react'
 import Player from '@vimeo/player'
 import { isIosLikeDevice } from '../../utils/isIosLikeDevice'
 
-// const VIDEO_URL = 'https://vimeo.com/753580183'
 const VIDEO_URL =
   'https://player.vimeo.com/video/1183401796?h=bbc384be2f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
 
 interface DemoVideoProviderProps {
   children: React.ReactElement | React.ReactElement[] | string
+  videoLink?: string
   env: string
 }
 
 const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
+  videoLink = VIDEO_URL,
   children,
   env
 }) => {
@@ -61,7 +62,7 @@ const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
         closeModal,
         reset,
         env,
-        videoLink: VIDEO_URL,
+        videoLink,
         isCheckPointReached,
         setIsCheckPointReached,
         isCalendarVisible,

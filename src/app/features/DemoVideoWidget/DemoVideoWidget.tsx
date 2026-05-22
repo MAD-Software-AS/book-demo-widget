@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import initializeT, { WidgetTranslations } from '../../initializeT'
 
-import DemoVideoContainer from './DemoVideoContainer'
-import DemoVideoModal from './DemoVideoModal'
-import DemoVideoTrigger from './DemoVideoTrigger'
+import DemoVideoContainer from './components/DemoVideoContainer/DemoVideoContainer'
+import DemoVideoModal from './components/DemoVideoModal/DemoVideoModal'
+import DemoVideoTrigger from './components/DemoVideoTrigger/DemoVideoTrigger'
 import Toast from '../../components/Toast/Toast'
 import useDemoVideoContext from '../../contexts/DemoVideo/useDemoVideoContext'
 
-export interface DemoVideoProps {
+export interface DemoVideoWidgetProps {
   t: Partial<WidgetTranslations>
   triggerStyle?: React.CSSProperties
   containerStyle?: React.CSSProperties
@@ -18,7 +18,7 @@ interface ToastState {
   type: 'success' | 'error'
 }
 
-const DemoVideo: React.FC<DemoVideoProps> = ({
+const DemoVideo: React.FC<DemoVideoWidgetProps> = ({
   t,
   triggerStyle,
   containerStyle
