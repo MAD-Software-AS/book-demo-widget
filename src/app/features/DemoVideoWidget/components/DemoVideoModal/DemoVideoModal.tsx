@@ -47,7 +47,7 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({ t }) => {
 
   const progressCallback = useCallback(
     (percent: number, _seconds: number, player: Player) => {
-      if (_seconds >= 60) {
+      if (_seconds >= 132) {
         setIsCheckPointReached((prev) => {
           if (prev) return prev
           player?.exitFullscreen()
