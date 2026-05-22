@@ -47,12 +47,12 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({ t }) => {
 
   const progressCallback = useCallback(
     (percent: number, _seconds: number, player: Player) => {
-      if (_seconds >= 132) {
+      if (_seconds >= 60) {
         setIsCheckPointReached((prev) => {
           if (prev) return prev
-          player.exitFullscreen()
-          player.exitPictureInPicture()
-          player.pause()
+          player?.exitFullscreen()
+          player?.exitPictureInPicture()
+          // player?.pause()
           return true
         })
       }
@@ -106,17 +106,20 @@ const DemoVideoModal: React.FC<DemoVideoModalProps> = ({ t }) => {
             />
           </div>
         )}
-        {isGate && isCalendarVisible && (
-          <div className="demo-video-modal__gate demo-video-modal__gate--calendar">
+        {isGate && (
+          <div
+            style={{ display: isCalendarVisible ? 'flex' : 'none' }}
+            className="demo-video-modal__gate demo-video-modal__gate--calendar"
+          >
             <CalendarWidget showEmbed url={t.calendar.url} />
           </div>
         )}
-        {showVideo && (
+        <div style={{ display: showVideo ? 'flex' : 'none' }}>
           <VideoPlayer
             videoUrl={videoLink}
             progressCallback={progressCallback}
           />
-        )}
+        </div>
       </div>
     </div>
   )
