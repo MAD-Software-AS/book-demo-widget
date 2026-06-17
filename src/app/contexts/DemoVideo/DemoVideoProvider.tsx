@@ -5,7 +5,7 @@ import Player from '@vimeo/player'
 import { isIosLikeDevice } from '../../utils/isIosLikeDevice'
 
 const VIDEO_URL =
-  'https://player.vimeo.com/video/1183401796?h=bbc384be2f&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
+  'https://player.vimeo.com/video/1201809638?h=912341f33e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'
 
 interface DemoVideoProviderProps {
   children: React.ReactElement | React.ReactElement[] | string
