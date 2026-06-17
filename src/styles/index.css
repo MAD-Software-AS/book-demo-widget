@@ -618,8 +618,9 @@ input::placeholder {
   align-items: center;
   justify-content: center;
   width: 100px;
-  height: 56px;
+  height: 52px;
   padding: 0;
+  box-shadow: 0 0 4px 0px rgba(255, 255, 255, .2);
 }
 
 .demo-video-trigger__play-icon {
