@@ -31,13 +31,20 @@ const DemoVideoProvider: React.FC<DemoVideoProviderProps> = ({
     setIsModalOpen(true)
     if (!isCheckPointReached) {
       if (isIosLikeDevice()) return
-      player?.play()
+      player?.play?.()
     }
   }
+
   const closeModal = () => {
+    if (!isCheckPointReached) {
+      player?.pause?.()
+      setIsCheckPointReached(true)
+      return
+    }
+
     setIsModalOpen(false)
     setIsCalendarVisible(false)
-    player?.pause()
+    player?.pause?.()
   }
 
   const reset = () => {
