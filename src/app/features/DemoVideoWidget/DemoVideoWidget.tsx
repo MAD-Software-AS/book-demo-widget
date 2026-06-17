@@ -11,6 +11,7 @@ export interface DemoVideoWidgetProps {
   t: Partial<WidgetTranslations>
   triggerStyle?: React.CSSProperties
   containerStyle?: React.CSSProperties
+  isPlayButton?: boolean
 }
 
 interface ToastState {
@@ -21,7 +22,8 @@ interface ToastState {
 const DemoVideo: React.FC<DemoVideoWidgetProps> = ({
   t,
   triggerStyle,
-  containerStyle
+  containerStyle,
+  isPlayButton
 }) => {
   const translations = initializeT(t)
   const { openModal } = useDemoVideoContext()
@@ -40,6 +42,7 @@ const DemoVideo: React.FC<DemoVideoWidgetProps> = ({
           onClick={openModal}
           text={translations.triggerButton}
           style={triggerStyle}
+          isPlayButton={isPlayButton}
         />
       </DemoVideoContainer>
       <DemoVideoModal t={translations.modal} onError={handleError} />

@@ -11,6 +11,7 @@ interface AppProps {
   triggerStyle?: React.CSSProperties
   containerStyle?: React.CSSProperties
   videoLink?: string
+  isPlayButton?: boolean
 }
 
 const App: React.FC<AppProps> = ({
@@ -18,6 +19,7 @@ const App: React.FC<AppProps> = ({
   triggerStyle,
   env = 'prod',
   videoLink,
+  isPlayButton,
   t
 }) => {
   return (
@@ -25,6 +27,7 @@ const App: React.FC<AppProps> = ({
       <DemoVideoWidget
         containerStyle={containerStyle}
         triggerStyle={triggerStyle}
+        isPlayButton={isPlayButton}
         t={t}
       />
     </DemoVideoProvider>

@@ -67,6 +67,7 @@ export default function createComponent(config: any) {
             videoLink={widgetConfig.videoLink || undefined}
             triggerStyle={widgetConfig.triggerStyle || undefined}
             containerStyle={widgetConfig.containerStyle || undefined}
+            isPlayButton={widgetConfig.isPlayButton || false}
           />
         </React.StrictMode>
       )
